@@ -1,210 +1,120 @@
-Perfeito. Você fez muito bem em perceber isso.
+# 📊 Campaign Analytics Engine
 
-Se é para posicionar como Analytics Engineer / Data Engineer, a stack precisa refletir exatamente o que você está usando — inclusive os tipos de joins, CTEs, window functions e controles de cardinalidade.
+- Seleção do registro mais recente  
+- Exclusão de inconsistências temporais  
 
-Vou refazer completo, mais técnico, mais preciso e mais forte para recrutador técnico.
+---
 
-Pode copiar e colar direto 👇
+## 🔹 Integration Layer
 
-📊 Campaign Analytics Engine
+Integração controlada entre múltiplas fontes:
 
-End-to-End Analytics Engineering Case Study
+- `INNER JOIN` para relacionamentos obrigatórios  
+- `LEFT JOIN` para preservar base analítica  
+- Controle explícito de cardinalidade  
+- Contagem pré e pós-join  
+- Comparação de volumetria para evitar explosão de registros  
 
-Este projeto simula um ambiente real de CRM, campanhas de incentivo e loyalty, utilizando dados sintéticos intencionalmente imperfeitos, com o objetivo de demonstrar a construção de um pipeline analítico confiável, auditável e orientado à decisão estratégica.
+### 🧠 Técnicas aplicadas
 
-O foco não está apenas na visualização, mas na criação de um motor analítico reutilizável, capaz de sustentar métricas consistentes, avaliação real de ROI e controle rigoroso de qualidade numérica.
+- CTEs para modularização da lógica  
+- Validação de relacionamentos 1:1, 1:N e N:1  
+- Uso de agregações prévias antes de joins  
+- Checagens com `COUNT(DISTINCT)`  
 
-🔎 Problema de Negócio
+### ⚠️ Exemplos de riscos tratados
 
-Em ambientes reais de BI e Marketing Analytics, é comum observar:
+- Campanhas com múltiplos eventos por cliente gerando duplicidade na transação  
+- Premiações associadas incorretamente a múltiplas ativações  
 
-Métricas infladas por joins incorretos
+---
 
-Quebra de cardinalidade (1:N → N:N involuntário)
-
-Duplicidade silenciosa de registros
-
-ROI calculado sem baseline adequado
-
-Falta de validação pós-integração
-
-Este projeto simula exatamente esses riscos — e demonstra como mitigá-los com práticas sólidas de engenharia analítica.
-
-🎯 Objetivos Técnicos
-
-Separar claramente as camadas: raw → staging → integration → metrics
-
-Controlar cardinalidade antes e depois de joins
-
-Aplicar deduplicação estratégica com window functions
-
-Definir baseline e incrementalidade com lógica auditável
-
-Garantir consistência entre métricas técnicas e visão executiva
-
-Reduzir risco de decisões baseadas em números inflados
-
-🧱 Arquitetura Analítica
-🔹 Raw Layer
-
-Dados simulados de CRM, campanhas, ativações, transações e premiações
-
-Presença intencional de inconsistências e duplicidades
-
-Nenhuma regra de negócio aplicada
-
-🔹 Staging Layer
-
-Deduplicação com ROW_NUMBER()
-
-Padronização de chaves
-
-Normalização de datas
-
-Tratamento de nulos
-
-Validações de integridade
-
-Exemplo de abordagem:
-
-Uso de ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY updated_at DESC)
-
-Seleção do registro mais recente
-
-Exclusão de inconsistências temporais
-
-🔹 Integration Layer
-
-Integração entre múltiplas fontes utilizando:
-
-INNER JOIN para relacionamentos obrigatórios
-
-LEFT JOIN para preservar base analítica
-
-Controle explícito de cardinalidade
-
-Contagem pré e pós-join
-
-Comparação de volumetria para evitar explosão de registros
-
-Técnicas aplicadas:
-
-CTEs para modularização da lógica
-
-Validação de 1:1, 1:N e N:1
-
-Uso de agregações prévias antes de joins
-
-Checagens com COUNT(DISTINCT)
-
-Exemplo de risco tratado:
-
-Campanhas com múltiplos eventos por cliente gerando duplicidade na transação
-
-Premiações associadas incorretamente a múltiplas ativações
-
-🔹 Metrics Layer
+## 🔹 Metrics Layer
 
 Modelagem explícita de métricas:
 
-Baseline por cliente/período
+- Baseline por cliente/período  
+- Receita incremental  
+- ROI real  
+- Custo efetivo por campanha  
 
-Receita incremental
+### 🧮 Técnicas utilizadas
 
-ROI real
+- `SUM()` controlado  
+- Window functions (`SUM() OVER`, `AVG() OVER`)  
+- Agrupamentos consistentes  
+- Separação clara entre métricas técnicas e executivas  
 
-Custo efetivo por campanha
+---
 
-Métricas agregadas com SUM() controlado
+## 🔹 Visualization Layer
 
-Uso de:
+Camada final implementada no Power BI:
 
-Window functions (SUM() OVER, AVG() OVER)
+- Modelo conectado diretamente à camada de métricas  
+- Indicadores orientados à decisão  
+- Foco em impacto financeiro  
+- Separação entre visão executiva e visão técnica  
 
-Agrupamentos consistentes
+---
 
-Separação clara entre métricas técnicas e executivas
+## ⚠️ Problemas Simulados nos Dados
 
-🔹 Visualization Layer
-
-Camada final no Power BI
-
-Modelo conectado à camada de métricas
-
-Indicadores orientados à decisão
-
-Foco em impacto financeiro
-
-⚠️ Problemas Simulados nos Dados
-
-Clientes duplicados no CRM
-
-Datas inconsistentes (update anterior ao cadastro)
-
-Campos críticos ausentes
-
-Eventos de campanha duplicados
-
-Premiações fora das regras
-
-Quebra de cardinalidade em joins
-
-Métricas infladas por N:N involuntário
+- Clientes duplicados no CRM  
+- Datas inconsistentes (update anterior ao cadastro)  
+- Campos críticos ausentes  
+- Eventos de campanha duplicados  
+- Premiações fora das regras  
+- Quebra de cardinalidade em joins  
+- Métricas infladas por N:N involuntário  
 
 Esses cenários refletem falhas comuns em ambientes reais.
 
-📈 Impacto Simulado
+---
+
+## 📈 Impacto Simulado
 
 O motor analítico permite:
 
-Identificar campanhas com ROI negativo real
+- Identificar campanhas com ROI negativo real  
+- Detectar inflação artificial de métricas  
+- Reduzir desperdício de budget  
+- Aumentar confiança nos números  
+- Sustentar decisões executivas com base auditável  
 
-Detectar inflação artificial de métricas
+---
 
-Reduzir desperdício de budget
+# 🛠️ Stack Técnica
 
-Aumentar confiança nos números
+## 🐍 Python
 
-Sustentar decisões executivas com base auditável
+- Geração de dados sintéticos realistas  
+- Simulação de inconsistências controladas  
+- Automação de validações  
 
-🛠️ Stack Técnica
-🐍 Python
+## 🗄️ SQL
 
-Geração de dados sintéticos realistas
+- CTEs para modularização de lógica  
+- `INNER JOIN` e `LEFT JOIN` estratégicos  
+- Controle de cardinalidade  
+- `ROW_NUMBER()` para deduplicação  
+- `COUNT(DISTINCT)` para auditoria  
+- Window functions  
+- `GROUP BY` estruturado  
+- Sanity checks pré e pós-integração  
+- Separação entre staging, integração e métricas  
 
-Simulação de inconsistências controladas
+## 📊 Power BI
 
-Automação de validações
+- Modelagem conectada à camada de métricas  
+- Dashboards orientados à decisão  
+- Visão executiva e técnica separadas  
 
-🗄️ SQL (Camada Analítica)
+---
 
-CTEs para modularização de lógica
+# 📁 Estrutura do Repositório
 
-INNER JOIN e LEFT JOIN estratégicos
-
-Controle de cardinalidade
-
-ROW_NUMBER() para deduplicação
-
-COUNT(DISTINCT) para auditoria
-
-Window functions (SUM() OVER, AVG() OVER)
-
-Agrupamentos consistentes (GROUP BY estruturado)
-
-Sanity checks pré e pós integração
-
-Separação entre staging, integração e métricas
-
-📊 Power BI
-
-Modelagem de dados conectada à camada de métricas
-
-Dashboards orientados à decisão
-
-Visão executiva e visão técnica separadas
-
-📁 Estrutura do Repositório
+```
 campaign-analytics-engine/
 ├── data/
 │   └── raw/                      # Dados brutos simulados
@@ -218,24 +128,27 @@ campaign-analytics-engine/
 ├── powerbi/
 │   └── model.md                  # Modelo analítico e documentação de métricas
 └── README.md
+```
 
-🚀 Roadmap de Evolução
+---
 
-Implementar análise de cohort para incrementalidade
+# 🚀 Roadmap de Evolução
 
-Criar alertas automatizados para anomalias
+- Implementar análise de cohort para incrementalidade  
+- Criar alertas automatizados para anomalias  
+- Simular cenários de otimização de budget  
+- Incorporar análise preditiva  
+- Evoluir para ambiente cloud (BigQuery / Data Warehouse dedicado)  
 
-Simular cenários de otimização de budget
+---
 
-Incorporar análise preditiva
-
-Evoluir para ambiente cloud (BigQuery / warehouse dedicado)
-
-📌 Observação
+# 📌 Observação
 
 Todos os dados utilizados são sintéticos e foram criados exclusivamente para fins de estudo técnico.
 
-👤 Autoria
+---
+
+# 👤 Autoria
 
 Projeto autoral desenvolvido de ponta a ponta como estudo aplicado de Analytics Engineering.
 
