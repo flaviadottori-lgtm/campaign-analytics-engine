@@ -1,202 +1,242 @@
-# Campaign Analytics Engine
+Perfeito. Você fez muito bem em perceber isso.
 
-Este projeto simula um cenário real de **CRM, campanhas de incentivo e loyalty**, utilizando **dados sintéticos intencionalmente imperfeitos**, com o objetivo de demonstrar como estruturar **pipelines de dados, integração entre múltiplas fontes, modelagem analítica, validação de qualidade e métricas confiáveis**, orientadas à **tomada de decisão de negócio**.
+Se é para posicionar como Analytics Engineer / Data Engineer, a stack precisa refletir exatamente o que você está usando — inclusive os tipos de joins, CTEs, window functions e controles de cardinalidade.
 
-O foco do projeto não é apenas a construção de dashboards, mas o desenvolvimento de um **motor analítico reutilizável**, capaz de sustentar análises recorrentes, avaliação real de ROI e recomendações acionáveis.
+Vou refazer completo, mais técnico, mais preciso e mais forte para recrutador técnico.
 
----
+Pode copiar e colar direto 👇
 
-## 🎯 Objetivo do Projeto
+📊 Campaign Analytics Engine
 
-- Simular dados de CRM, transações e campanhas com **problemas reais de qualidade**
-- Integrar múltiplas fontes de dados utilizando **joins controlados e auditáveis**
-- Construir uma camada de **staging e modelagem analítica**
-- Definir métricas claras para avaliação de campanhas
-- Reduzir riscos de decisões baseadas em métricas infladas ou inconsistentes
-- Demonstrar BI como **ferramenta de decisão**, não apenas de monitoramento
+End-to-End Analytics Engineering Case Study
 
----
+Este projeto simula um ambiente real de CRM, campanhas de incentivo e loyalty, utilizando dados sintéticos intencionalmente imperfeitos, com o objetivo de demonstrar a construção de um pipeline analítico confiável, auditável e orientado à decisão estratégica.
 
-## 😖 Dores de Negócio que o Projeto Endereça
+O foco não está apenas na visualização, mas na criação de um motor analítico reutilizável, capaz de sustentar métricas consistentes, avaliação real de ROI e controle rigoroso de qualidade numérica.
 
-### 1. Métricas infladas por erros de integração
-Em ambientes reais, campanhas aparentam bons resultados devido a:
-- joins incorretos
-- duplicidade de registros
-- quebra de cardinalidade
-- ausência de sanity checks
+🔎 Problema de Negócio
 
-**Como o projeto resolve:**
-- Deduplicação antes de joins  
-- Validação explícita de cardinalidade  
-- Uso criterioso de `INNER JOIN` e `LEFT JOIN`  
-- Checagens pós-join para garantir consistência dos números  
+Em ambientes reais de BI e Marketing Analytics, é comum observar:
 
----
+Métricas infladas por joins incorretos
 
-### 2. Falta de clareza sobre o ROI real das campanhas
-Sem baseline e incrementalidade, a empresa não consegue separar:
-- crescimento natural
-- efeito real da campanha
-- custo efetivo do incentivo
+Quebra de cardinalidade (1:N → N:N involuntário)
 
-**Como o projeto resolve:**
-- Definição de baseline por cliente ou período  
-- Cálculo de incrementalidade  
-- Métricas de ROI orientadas à tomada de decisão  
+Duplicidade silenciosa de registros
 
----
+ROI calculado sem baseline adequado
 
-### 3. Alto retrabalho em análises e dashboards
-Demandas recorrentes geram:
-- múltiplas queries para o mesmo conceito
-- métricas diferentes com o mesmo nome
-- baixa confiança nos números
+Falta de validação pós-integração
 
-**Como o projeto resolve:**
-- Centralização das regras de negócio  
-- Motor analítico reutilizável  
-- Separação clara entre dado bruto, dado tratado e métricas  
+Este projeto simula exatamente esses riscos — e demonstra como mitigá-los com práticas sólidas de engenharia analítica.
 
----
+🎯 Objetivos Técnicos
 
-### 4. BI utilizado apenas como relatório
-Dashboards existem, mas não orientam decisões.
+Separar claramente as camadas: raw → staging → integration → metrics
 
-**Como o projeto resolve:**
-- Dashboards conectados a métricas confiáveis  
-- Visões de risco, oportunidade e quick wins  
-- BI como apoio direto à decisão estratégica  
+Controlar cardinalidade antes e depois de joins
 
----
+Aplicar deduplicação estratégica com window functions
 
-## 📈 Resultados Esperados
+Definir baseline e incrementalidade com lógica auditável
 
-### Resultados Técnicos
-- Dados confiáveis e auditáveis
-- Redução de erros silenciosos em análises
-- Integração consistente entre CRM, campanhas e transações
-- Queries mais legíveis, versionadas e escaláveis
+Garantir consistência entre métricas técnicas e visão executiva
 
-### Resultados de Negócio
-- Entendimento claro do desempenho real das campanhas
-- Melhor alocação do budget de incentivo
-- Redução de desperdício financeiro
-- Identificação precoce de desvios e anomalias
+Reduzir risco de decisões baseadas em números inflados
 
-### Resultados Organizacionais
-- Menor dependência de análises ad hoc
-- Maior autonomia do time de BI
-- Comunicação mais clara entre dados e áreas de negócio
+🧱 Arquitetura Analítica
+🔹 Raw Layer
 
----
+Dados simulados de CRM, campanhas, ativações, transações e premiações
 
-## 🧠 Abordagem Analítica
+Presença intencional de inconsistências e duplicidades
 
-O projeto segue uma separação clara de responsabilidades ao longo do pipeline:
+Nenhuma regra de negócio aplicada
 
-### 🔹 Dados Brutos (Raw)
-- Extrações diretas dos sistemas simulados
-- Presença de duplicidades, inconsistências e dados faltantes
-- Nenhuma regra de negócio aplicada
+🔹 Staging Layer
 
-### 🔹 Staging
-- Deduplicação de registros (ex.: CRM)
-- Padronização de datas e chaves
-- Validação de regras de negócio
-- Preparação para integração entre fontes
+Deduplicação com ROW_NUMBER()
 
-### 🔹 Integração de Dados
-- Joins entre CRM, transações, campanhas, ativações e premiações
-- Controle explícito de cardinalidade
-- Escolha criteriosa do tipo de join (`INNER` / `LEFT`)
+Padronização de chaves
 
-### 🔹 Modelagem Analítica
-- Organização dos dados em estruturas confiáveis
-- Separação entre fatos e dimensões
-- Preparação para cálculo de métricas
+Normalização de datas
 
-### 🔹 Métricas
-- Baseline
-- Incrementalidade
-- ROI
-- Indicadores acionáveis para decisão
+Tratamento de nulos
 
-### 🔹 Visualização
-- Camada final de comunicação
-- Dashboards orientados à tomada de decisão
+Validações de integridade
 
----
+Exemplo de abordagem:
 
-## 🧪 Principais Problemas Simulados nos Dados
+Uso de ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY updated_at DESC)
 
-- Clientes duplicados no CRM
-- Campos críticos ausentes (estado, segmento)
-- Datas inconsistentes (atualização anterior ao cadastro)
-- Duplicação de eventos de campanha
-- Premiações pagas fora das regras esperadas
-- Risco de métricas infladas por joins incorretos
+Seleção do registro mais recente
 
-Esses cenários refletem desafios comuns em ambientes reais de BI e Analytics.
+Exclusão de inconsistências temporais
 
----
+🔹 Integration Layer
 
-## 🛠️ Stack Utilizada
+Integração entre múltiplas fontes utilizando:
 
-- **Python**
-  - Geração de dados sintéticos realistas
-  - Automação de análises e validações
-  - Suporte a análises exploratórias
+INNER JOIN para relacionamentos obrigatórios
 
-- **SQL**
-  - Staging e integração de dados
-  - Joins complexos entre múltiplas fontes
-  - Modelagem analítica
-  - CTEs, window functions e sanity checks
+LEFT JOIN para preservar base analítica
 
-- **Power BI**
-  - Camada final de visualização
-  - Dashboards orientados à tomada de decisão
+Controle explícito de cardinalidade
 
----
+Contagem pré e pós-join
 
-## 📁 Estrutura do Repositório
+Comparação de volumetria para evitar explosão de registros
 
-```text
+Técnicas aplicadas:
+
+CTEs para modularização da lógica
+
+Validação de 1:1, 1:N e N:1
+
+Uso de agregações prévias antes de joins
+
+Checagens com COUNT(DISTINCT)
+
+Exemplo de risco tratado:
+
+Campanhas com múltiplos eventos por cliente gerando duplicidade na transação
+
+Premiações associadas incorretamente a múltiplas ativações
+
+🔹 Metrics Layer
+
+Modelagem explícita de métricas:
+
+Baseline por cliente/período
+
+Receita incremental
+
+ROI real
+
+Custo efetivo por campanha
+
+Métricas agregadas com SUM() controlado
+
+Uso de:
+
+Window functions (SUM() OVER, AVG() OVER)
+
+Agrupamentos consistentes
+
+Separação clara entre métricas técnicas e executivas
+
+🔹 Visualization Layer
+
+Camada final no Power BI
+
+Modelo conectado à camada de métricas
+
+Indicadores orientados à decisão
+
+Foco em impacto financeiro
+
+⚠️ Problemas Simulados nos Dados
+
+Clientes duplicados no CRM
+
+Datas inconsistentes (update anterior ao cadastro)
+
+Campos críticos ausentes
+
+Eventos de campanha duplicados
+
+Premiações fora das regras
+
+Quebra de cardinalidade em joins
+
+Métricas infladas por N:N involuntário
+
+Esses cenários refletem falhas comuns em ambientes reais.
+
+📈 Impacto Simulado
+
+O motor analítico permite:
+
+Identificar campanhas com ROI negativo real
+
+Detectar inflação artificial de métricas
+
+Reduzir desperdício de budget
+
+Aumentar confiança nos números
+
+Sustentar decisões executivas com base auditável
+
+🛠️ Stack Técnica
+🐍 Python
+
+Geração de dados sintéticos realistas
+
+Simulação de inconsistências controladas
+
+Automação de validações
+
+🗄️ SQL (Camada Analítica)
+
+CTEs para modularização de lógica
+
+INNER JOIN e LEFT JOIN estratégicos
+
+Controle de cardinalidade
+
+ROW_NUMBER() para deduplicação
+
+COUNT(DISTINCT) para auditoria
+
+Window functions (SUM() OVER, AVG() OVER)
+
+Agrupamentos consistentes (GROUP BY estruturado)
+
+Sanity checks pré e pós integração
+
+Separação entre staging, integração e métricas
+
+📊 Power BI
+
+Modelagem de dados conectada à camada de métricas
+
+Dashboards orientados à decisão
+
+Visão executiva e visão técnica separadas
+
+📁 Estrutura do Repositório
 campaign-analytics-engine/
 ├── data/
 │   └── raw/                      # Dados brutos simulados
 ├── python/
 │   └── generate_data.py          # Geração de dados sintéticos
 ├── sql/
-│   ├── 01_staging.sql            # Staging e deduplicação
-│   ├── 02_quality.sql            # Relatórios de qualidade
-│   ├── 03_integration.sql        # Joins e integração entre fontes
-│   └── 04_metrics.sql            # Métricas (baseline, ROI, incrementalidade)
+│   ├── 01_staging.sql            # Deduplicação e padronização
+│   ├── 02_quality.sql            # Relatórios de qualidade e auditoria
+│   ├── 03_integration.sql        # Integração controlada (joins e cardinalidade)
+│   └── 04_metrics.sql            # Baseline, incrementalidade e ROI
 ├── powerbi/
-│   └── model.md                  # Modelo analítico e métricas
+│   └── model.md                  # Modelo analítico e documentação de métricas
 └── README.md
 
-🚀 Próximos Passos
+🚀 Roadmap de Evolução
 
-Evoluir métricas de incrementalidade com análise de cohort
+Implementar análise de cohort para incrementalidade
 
-Implementar alertas automatizados para anomalias
+Criar alertas automatizados para anomalias
 
-Expandir dashboards com foco em decisões executivas
+Simular cenários de otimização de budget
 
-Simular testes de cenário e otimização de budget
+Incorporar análise preditiva
 
-Explorar uso de IA como apoio à geração de hipóteses analíticas
+Evoluir para ambiente cloud (BigQuery / warehouse dedicado)
 
-📌 Observação Importante
+📌 Observação
 
-Os dados utilizados neste projeto são totalmente sintéticos e foram criados exclusivamente para fins de estudo e demonstração técnica. Não representam dados reais de clientes ou empresas.
+Todos os dados utilizados são sintéticos e foram criados exclusivamente para fins de estudo técnico.
 
-👤 Autoria e Contexto
+👤 Autoria
 
-Este é um projeto autoral, desenvolvido por mim de ponta a ponta como estudo técnico.
+Projeto autoral desenvolvido de ponta a ponta como estudo aplicado de Analytics Engineering.
 
-O objetivo é simular desafios reais encontrados em ambientes de BI e Analytics, incluindo integração de múltiplas fontes, tratamento de dados imperfeitos, definição de métricas e apoio à tomada de decisão.
-
-O projeto não representa um ambiente produtivo real, mas reflete minha forma de estruturar problemas analíticos, tomar decisões técnicas e traduzir dados em valor para o negócio.
+Reflete minha abordagem na estruturação de pipelines, controle de qualidade numérica e tradução de dados em decisões estratégicas.
