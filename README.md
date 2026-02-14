@@ -116,18 +116,29 @@ O motor analítico permite:
 
 ```
 campaign-analytics-engine/
+│
+├── app.py                         # Dashboard executivo (Streamlit)
+├── requirements.txt
+├── .gitignore
+├── README.md
+│
 ├── data/
-│   └── raw/                      # Dados brutos simulados
+│   └── raw/                       # Dados brutos simulados
+│
 ├── python/
-│   └── generate_data.py          # Geração de dados sintéticos
+│   └── generate_data.py           # Geração de dados sintéticos
+│
 ├── sql/
-│   ├── 01_staging.sql            # Deduplicação e padronização
-│   ├── 02_quality.sql            # Relatórios de qualidade e auditoria
-│   ├── 03_integration.sql        # Integração controlada (joins e cardinalidade)
-│   └── 04_metrics.sql            # Baseline, incrementalidade e ROI
-├── powerbi/
-│   └── model.md                  # Modelo analítico e documentação de métricas
-└── README.md
+│   ├── 01_staging.sql
+│   ├── 02_quality.sql
+│   ├── 03_integration.sql
+│   └── 04_metrics.sql
+│
+├── assets/
+│   └── dashboard_preview.png      # Print do dashboard
+│
+└── docs/
+    └── model.md                   # Modelo analítico e métricas
 ```
 
 ---
