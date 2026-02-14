@@ -1,275 +1,202 @@
-# 📊 Campaign Analytics Engine
+# 📊 Campaign Analytics Engine  
+### FMD Insights • Executive Marketing Dashboard  
 
-Pipeline analítico completo para mensuração de performance de campanhas de marketing,
-estruturado em múltiplas camadas (raw → staging → integration → metrics)
-com visualização executiva em Streamlit.
+Motor analítico completo para avaliação de performance de campanhas, com controle explícito de qualidade, cardinalidade e modelagem de métricas executivas.
 
-O projeto simula um ambiente real de CRM + campanhas promocionais,
-incluindo problemas típicos de qualidade, cardinalidade e inflação de métricas,
-demonstrando como estruturar dados de forma auditável e orientada à decisão.
+Projeto desenvolvido com foco em:
 
-Stack principal: BigQuery • SQL • Python • Streamlit
-
----
-
-# 🎯 Objetivo do Projeto
-
-Simular um ambiente corporativo de Marketing Analytics estruturando:
-
-- Pipeline com controle explícito de qualidade
-- Integrações com validação de cardinalidade
-- Métricas executivas auditáveis
-- Comparação automática entre períodos
-- Visualização executiva orientada à decisão
-
-O foco não é apenas gerar dashboards,
-mas garantir consistência numérica e governança das métricas.
+- Engenharia de métricas confiáveis  
+- Controle de inflação numérica por joins  
+- Modelagem orientada à decisão  
+- Visualização executiva para portfólio  
 
 ---
 
-# 🏗 Arquitetura Analítica
+# 🖥️ Dashboard Executivo (Streamlit)
 
-O projeto está organizado em quatro camadas principais:
+## Executive Overview
+![Executive Overview](assets/01_overview.png.jpg)
+
+## Performance
+![Performance](assets/02_performance.png.jpg)
+
+## Dados & Export
+![Dados](assets/03_data_export.png.jpg)
 
 ---
 
-## 🔹 Staging Layer
+# 🏗️ Arquitetura Analítica
+
+O projeto foi estruturado em camadas bem definidas.
+
+---
+
+## 🔹 1. Staging Layer
 
 Tratamento e padronização dos dados brutos:
 
-- Remoção de duplicidades com ROW_NUMBER()
-- Normalização de datas
-- Seleção do registro mais recente
+- Deduplicação com `ROW_NUMBER()`
 - Exclusão de inconsistências temporais
-- Padronização de campos críticos
+- Padronização de tipos
+- Seleção do registro mais recente
 
 ---
 
-## 🔹 Integration Layer
+## 🔹 2. Quality Layer
+
+Validações estruturais:
+
+- Checagem de cardinalidade
+- `COUNT(DISTINCT)` para auditoria
+- Comparação pré e pós integração
+- Identificação de duplicidades
+
+---
+
+## 🔹 3. Integration Layer
 
 Integração controlada entre múltiplas fontes:
 
-- INNER JOIN para relacionamentos obrigatórios
-- LEFT JOIN para preservar base analítica
+- `INNER JOIN` para relacionamentos obrigatórios
+- `LEFT JOIN` para preservar base analítica
 - Controle explícito de cardinalidade
-- Contagem pré e pós-join
-- Comparação de volumetria para evitar explosão de registros
-
-### Técnicas aplicadas
-
-- CTEs para modularização da lógica
-- Validação de relacionamentos 1:1, 1:N e N:1
 - Agregações prévias antes de joins
-- Checagens com COUNT(DISTINCT)
 
 ### Riscos tratados
 
-- Campanhas com múltiplos eventos por cliente gerando duplicidade
+- N:N involuntário
+- Inflação de receita
+- Duplicidade por múltiplos eventos
 - Premiações associadas incorretamente
-- Métricas infladas por joins N:N involuntários
-- Explosão de registros após integração
 
 ---
 
-## 🔹 Metrics Layer
+## 🔹 4. Metrics Layer
 
 Modelagem explícita de métricas executivas:
 
 - Receita total
 - Ticket médio ponderado
 - Clientes ativos (soma diária)
-- Baseline por período
-- Receita incremental
-- ROI real
+- Comparação com período anterior
+- Receita incremental simulada
+- ROI simulado
 
-### Técnicas utilizadas
+Técnicas utilizadas:
 
-- SUM() controlado
-- Window functions (SUM() OVER, AVG() OVER)
-- Agrupamentos consistentes
-- Separação clara entre métricas técnicas e executivas
+- `SUM()`
+- `GROUP BY`
+- Window functions (`SUM() OVER`, `AVG() OVER`)
+- Agregações controladas
 
 ---
 
-## 🔹 Visualization Layer (Streamlit)
+## 🔹 5. Visualization Layer
 
-Camada executiva construída em Python:
+Implementada em Streamlit conectando diretamente ao BigQuery.
 
-- KPIs principais no topo
-- Comparação vs período anterior
-- Receita ao longo do tempo
-- Mix de receita por campanha
+Características:
+
+- Layout executivo
+- KPIs com variação percentual
+- Filtros dinâmicos
+- Análise temporal
 - Ranking de campanhas
-- Insights automáticos
-- Exportação de dados filtrados
-
-O dashboard consome diretamente a camada de métricas (mart analítico).
-
----
-
-# 📊 Dashboard Executivo
-
-### Executive Overview
-![Executive Overview](assets/01_overview.png)
-
-### Performance
-![Performance](assets/02_performance.png)
-
-### Dados & Export
-![Dados & Export](assets/03_data_export.png)
+- Exportação CSV
 
 ---
 
 # ⚠️ Problemas Simulados nos Dados
 
-O projeto inclui falhas realistas:
+O dataset inclui falhas comuns de ambientes reais:
 
 - Clientes duplicados no CRM
-- Datas inconsistentes (update anterior ao cadastro)
-- Campos críticos ausentes
-- Eventos de campanha duplicados
-- Premiações fora das regras
-- Quebra de cardinalidade em joins
-- Métricas infladas por N:N involuntário
-
-Esses cenários refletem problemas comuns em ambientes reais de marketing e CRM.
+- Datas inconsistentes
+- Eventos duplicados
+- Premiações fora de regra
+- Quebra de cardinalidade
+- Métricas infladas por joins N:N
 
 ---
 
-# 📈 Impacto Analítico Simulado
+# 🛠️ Stack Técnica
 
-O motor analítico permite:
+## 🐍 Python
+- Geração de dados sintéticos
+- Streamlit
+- Pandas
+- Plotly
+- Integração com BigQuery
 
-- Identificar campanhas com ROI negativo real
-- Detectar inflação artificial de métricas
-- Reduzir desperdício de budget
-- Aumentar confiança nos números
-- Sustentar decisões executivas com base auditável
-
----
-
-# 🛠 Stack Técnica
-
-## Python
-
-- Geração de dados sintéticos realistas
-- Simulação de inconsistências controladas
-- Construção de dashboard executivo (Streamlit)
-- Comparação automática entre períodos
-
-## SQL (BigQuery)
-
-- CTEs para modularização
-- INNER JOIN e LEFT JOIN estratégicos
+## 🗄️ SQL
+- CTEs
 - Controle de cardinalidade
-- ROW_NUMBER() para deduplicação
-- COUNT(DISTINCT) para auditoria
+- `ROW_NUMBER()`
+- `COUNT(DISTINCT)`
 - Window functions
-- Sanity checks pré e pós-integração
-- Separação entre staging, integração e métricas
+- Separação clara entre camadas
 
-## Streamlit
-
-- Layout executivo
-- Filtros dinâmicos
-- KPIs com variação percentual
-- Visualizações interativas
-- Exportação CSV
+## ☁️ BigQuery
+- Armazenamento analítico
+- Consulta direta via client Python
 
 ---
 
 # 📁 Estrutura do Repositório
 
 campaign-analytics-engine/
-│
-├── app.py                         # Dashboard executivo (Streamlit)
-├── requirements.txt
-├── .gitignore
-├── README.md
-│
-├── data/
-│   └── raw/                       # Dados brutos simulados
-│
-├── python/
-│   └── generate_data.py           # Geração de dados sintéticos
-│
-├── sql/
-│   ├── 01_staging.sql
-│   ├── 02_quality.sql
-│   ├── 03_integration.sql
-│   └── 04_metrics.sql
-│
-├── assets/
-<<<<<<< HEAD
-│   └── dashboard_preview.png      # Print do dashboard
-│
-└── docs/
-    └── model.md                   # Modelo analítico e métricas
-```
-=======
-│   ├── 01_overview.png
-│   ├── 02_performance.png
-│   └── 03_data_export.png
-│
-└── docs/
-    └── model.md                   # Modelo analítico e definição de métricas
+
+├── app.py  
+├── requirements.txt  
+├── .gitignore  
+├── README.md  
+
+├── assets/  
+│   ├── 01_overview.png.jpg  
+│   ├── 02_performance.png.jpg  
+│   └── 03_data_export.png.jpg  
+
+├── data/  
+│   └── raw/  
+
+├── python/  
+│   └── generate_data.py  
+
+├── sql/  
+│   ├── 01_staging.sql  
+│   ├── 02_quality.sql  
+│   ├── 03_integration.sql  
+│   └── 04_metrics.sql  
 
 ---
 
-# 🚀 Como Executar
+# 🚀 Como Rodar o Projeto
 
-1) Instale as dependências:
+1️⃣ Criar ambiente virtual  
+python -m venv .venv  
 
-pip install -r requirements.txt
+2️⃣ Ativar ambiente (Windows)  
+.venv\Scripts\activate  
 
-2) Configure as credenciais do BigQuery via variável de ambiente:
+3️⃣ Instalar dependências  
+pip install -r requirements.txt  
 
-GOOGLE_APPLICATION_CREDENTIALS
+4️⃣ Configurar autenticação Google Cloud  
+gcloud auth application-default login  
 
-Ou utilize:
-
-gcloud auth application-default login
-
-3) Execute o dashboard:
-
-streamlit run app.py
-
----
-
-# 🔐 Credenciais
-
-Este repositório não contém credenciais.
-
-O acesso ao BigQuery deve ser configurado via variável de ambiente
-ou Application Default Credentials.
->>>>>>> 2f0ff39 (docs: update README with dashboard preview and project structure)
-
----
-
-# 🚀 Roadmap de Evolução
-
-- Implementar análise de cohort
-- Criar alertas automatizados de anomalia
-- Simular otimização de budget
-- Incorporar análise preditiva
-- Evoluir para ambiente cloud estruturado
+5️⃣ Executar o dashboard  
+streamlit run app.py  
 
 ---
 
 # 📌 Observação
 
-Todos os dados utilizados são sintéticos e foram criados exclusivamente
-para fins educacionais e técnicos.
+Todos os dados são sintéticos e foram criados exclusivamente para fins educacionais e demonstração técnica.
 
 ---
 
 # 👤 Autoria
 
-Projeto autoral desenvolvido de ponta a ponta como estudo aplicado de Analytics Engineering.
+Projeto autoral desenvolvido como estudo aplicado de Analytics Engineering.
 
-Reflete minha abordagem na:
-
-- Estruturação de pipelines
-- Controle de qualidade numérica
-- Governança de métricas
-- Tradução de dados em decisões estratégicas
+Reflete minha abordagem na estruturação de pipelines, controle de qualidade numérica e tradução de dados em decisões estratégicas.
